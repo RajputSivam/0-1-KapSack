@@ -1,0 +1,45 @@
+416. Partition Equal Subset Sum
+
+Given an integer array nums, return true if you can partition the array into two subsets such that the sum of the elements in both subsets is equal or false otherwise.
+
+Example 1:
+
+Input: nums = [1,5,11,5]
+Output: true
+Explanation: The array can be partitioned as [1, 5, 5] and [11].
+
+Approach
+//Recursive
+1.If sum  of all element equals is odd return false, it can  not be divided into two equal parts
+2. Using take not take check result and return, (Remember every element taken ontly one time)
+
+//Recursive 
+class Solution {
+    public boolean canPartition(int[] nums) {
+        int sm=0;
+        for(int a:nums)
+        {
+            sm+=a;
+        }
+        if( sm%2!=0) return false;
+        int t=sm/2;
+        return help(t,nums,nums.length-1);
+    }
+    public static boolean help(int target,int []nums,int idx)
+    {
+        if( idx==0) 
+        {
+            return nums[0]==target;
+        }
+        if( target==0) return true;
+
+        boolean nt=help(target,nums,idx-1);
+        boolean tk=false;
+        if( target>=nums[idx] )
+        {
+            tk=help(target-nums[idx],nums,idx-1);
+        }
+        return tk ||nt;
+
+    }
+}
