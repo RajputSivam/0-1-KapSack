@@ -43,3 +43,64 @@ class Solution {
 
     }
 }
+//Tabulation
+
+Appraoch
+1.nt=i>0? dp[i-1][t]: nums[0]==t; 
+2. boolean tk=false;
+                if( t>=nums[i] )
+                {
+                    if( i>0)
+                    {
+                        tk=dp[i-1][t-nums[i]];
+                    }
+                    else
+                    {
+                        tk=t-nums[i]==0;
+                    }
+                }
+3.Target start from 1,beacuse target at 0,already filled
+
+
+
+class Solution {
+    public boolean canPartition(int[] nums) {
+        int sm=0;
+        for(int a:nums)
+        {
+            sm+=a;
+        }
+        if( sm%2!=0) return false;
+        int target=sm/2;
+        
+        boolean[][]dp=new boolean [nums.length+1][target+1];
+        for(int i=0;i<nums.length;i++)
+        {
+            dp[i][0]=true;
+        }
+        
+        for(int i=0;i<nums.length;i++)
+        {
+            for(int t=1;t<=target;t++)
+            {
+                boolean nt=i>0? dp[i-1][t]: nums[0]==t; 
+                
+                boolean tk=false;
+                if( t>=nums[i] )
+                {
+                    if( i>0)
+                    {
+                        tk=dp[i-1][t-nums[i]];
+                    }
+                    else
+                    {
+                        tk=t-nums[i]==0;
+                    }
+                }
+                dp[i][t]=tk||nt;
+            }
+                    
+        }
+        return dp[nums.length-1][target];
+    }
+}
